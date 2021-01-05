@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="{{url_for('static',filename='main.js')}}" defer></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}" />
+    {{fontawesome_html()}}
+    <title>Task r</title>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <h1>TaskR</h1>
+      </div>
+      <div class="count">
+
+      </div>
+    </header>
+    <main>
+      <div class="task-form">
+        <div class="form-area">
+          <form action="">
+            <fieldset>
+              <label for="name">Name</label>
+              <input type="text" name="name" id="" required/>
+            </fieldset>
+            <fieldset>
+              <label for="description">Description</label>
+              <textarea name="description" id="" cols="30" rows="3" required> </textarea>
+            </fieldset>
+            <fieldset>
+              <input type="submit" class="mybtn" value="Save" />
+            </fieldset>
+          </form>
+        </div>
+      </div>
+      <div class="tasks">
+       
+        
+        {% for task in tasks %}
+                <div class="task">
+                  <h3 class="task-name">
+                   <span class="id">{{task.id}}</span> {{task.name}}
+                </h3>
+                <p class="task-desc">
+                  {{task.description}}
+                </p>
+                <a href="#" class="delete-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <a href="#" class="update-btn"><i class="fa fa-pen" aria-hidden="true"></i></a>
+              </div>
+        {% endfor %}
+        <div class="notasks" >
+          <center>
+            There are no tasks yet
+          </center>
+        </div>
+      </div>
+    </main>
+    <div class="update-modal" id="update">
+     
+      <div class="update-form">
+        <button type="button" onclick="closeModal('update')" class="can">X</button>
+        <center><h3>Update Task</h3></center>
+        <form action="" id="form-update">
+          <fieldset>
+            <label for="name">Name</label>
+            <input type="text" name="name" id="update-name" required/>
+          </fieldset>
+          <fieldset>
+            <label for="description">Description</label>
+            <textarea name="description" id="update-desc" cols="30" rows="3" required> </textarea>
+          </fieldset>
+          <fieldset>
+            <input type="submit" class="mybtn" value="Save" />
+          </fieldset>
+        </form>
+      </div>
+    </div>
+    <div class="noti-modal" id="noti">
+      <div class="noti-messages" >
+          <h3>Message: </h3>
+          <br>
+          <p class="message"></p>
+          <br><br>
+          <a href="#" class="noti-btn" onclick="closeModal('noti')">Ok</a>
+      </div>
+    </div>
+  </body>
+</html>
