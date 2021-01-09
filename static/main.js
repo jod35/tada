@@ -11,6 +11,7 @@ const updateButtons = document.querySelectorAll(".update-btn");
 const updateForm = document.querySelector("#form-update");
 const notificationModal = document.querySelector(".noti-modal");
 const message = document.querySelector(".message");
+const loadingSpinner=document.querySelector('.loading');
 
 let p = document.createElement("p");
 
@@ -76,13 +77,20 @@ taskForm.addEventListener("submit", (e) => {
       newTask.classList.add("task");
 
       newTask.innerHTML = html;
-
-      taskContainer.insertBefore(newTask, taskContainer.childNodes[0]);
+      loadingSpinner.style.display="block";
+      
+     
 
 
       setTimeout(() => {
+        taskContainer.insertBefore(newTask, taskContainer.childNodes[0]);
+        loadingSpinner.style.display="none"
+      }, 1800);
+
+      setTimeout(() => {
         location.reload();
-      }, 3000);
+      }, 2000);
+      
     });
 
   taskForm.reset();

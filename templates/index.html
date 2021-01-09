@@ -36,7 +36,9 @@
         </div>
       </div>
       <div class="tasks">
-       
+       <div class="loading">
+         <img src="{{url_for('static',filename='loader.gif')}}" alt="">
+       </div>
         
         {% for task in tasks %}
                 <div class="task">
@@ -60,7 +62,7 @@
     <div class="update-modal" id="update">
      
       <div class="update-form">
-        <button type="button" onclick="closeModal('update')" class="can">X</button>
+        <button type="button" onclick="closeModal('update')" class="cancel">X</button>
         <center><h3>Update Task</h3></center>
         <form action="" id="form-update">
           <fieldset>
