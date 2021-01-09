@@ -78,8 +78,7 @@ taskForm.addEventListener("submit", (e) => {
       newTask.innerHTML = html;
 
       taskContainer.insertBefore(newTask, taskContainer.childNodes[0]);
-      notificationModal.style.display = "block";
-      message.innerText = data.message;
+
 
       setTimeout(() => {
         location.reload();
@@ -122,35 +121,37 @@ for (let i = 0; i < tasks.length; i++) {
         document.querySelector("#update-name").value = data.task.name;
         document.querySelector("#update-desc").value = data.task.description;
       });
-  });
-}
 
-for (let i = 0; i < tasks.length; i++) {
-  updateForm.addEventListener("submit", (e) => {
-    let RESOURCE_URL = `/api/task/${taskIds[i].innerText}`;
 
-    let updatedData = new FormData(updateForm);
-
-    let updatedTask = {
-      name: updatedData.get("name"),
-      description: updatedData.get("description"),
-    };
-    updateModal.style.display = "none";
-    fetch(RESOURCE_URL, {
-      method: "PUT",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(updatedTask),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        notificationModal.style.display = "block";
-        message.innerText = data.message;
-
-        setTimeout(() => {
-          location.reload();
-        }, 3000);
+      updateForm.addEventListener("submit", (e) => {
+        let RESOURCE_URL = `/api/task/${taskIds[i].innerText}`;
+    
+        let updatedData = new FormData(updateForm);
+    
+        let updatedTask = {
+          name: updatedData.get("name"),
+          description: updatedData.get("description"),
+        };
+        updateModal.style.display = "none";
+        fetch(RESOURCE_URL, {
+          method: "PUT",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(updatedTask),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            notificationModal.style.display = "block";
+            message.innerText = data.message;
+    
+            setTimeout(() => {
+              location.reload();
+            }, 3000);
+          });
+    
+        e.preventDefault();
       });
-
-    e.preventDefault();
   });
 }
+
+
+
