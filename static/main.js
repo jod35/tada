@@ -85,11 +85,11 @@ taskForm.addEventListener("submit", (e) => {
       setTimeout(() => {
         taskContainer.insertBefore(newTask, taskContainer.childNodes[0]);
         loadingSpinner.style.display="none"
-      }, 1800);
+      }, 1200);
 
       setTimeout(() => {
         location.reload();
-      }, 2000);
+      }, 3000);
       
     });
 
