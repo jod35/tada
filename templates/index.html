@@ -13,6 +13,14 @@
       <div class="logo">
         <h1>TaskR</h1>
       </div>
+      <div class="clear">
+        <button class="mybtn clear">Clear All tasks</button>
+      </div>
+
+      <div class="refresh">
+        <button class="mybtn clear">Refresh</button>
+      </div>
+
       <div class="count">
 
       </div>
@@ -42,8 +50,9 @@
         
         {% for task in tasks %}
                 <div class="task">
+                  <span class="id">{{task.id}}</span>
                   <h3 class="task-name">
-                   <span class="id">{{task.id}}</span> {{task.name}}
+                    {{task.name}}
                 </h3>
                 <p class="task-desc">
                   {{task.description}}

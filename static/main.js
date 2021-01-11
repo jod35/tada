@@ -11,7 +11,46 @@ const updateButtons = document.querySelectorAll(".update-btn");
 const updateForm = document.querySelector("#form-update");
 const notificationModal = document.querySelector(".noti-modal");
 const message = document.querySelector(".message");
-const loadingSpinner=document.querySelector('.loading');
+const loadingSpinner = document.querySelector('.loading');
+const taskNames = document.querySelectorAll('.task-name');
+const taskDescriptions = document.querySelectorAll('.task-desc');
+const refreshButton = document.querySelector('.refresh');
+const clearButton = document.querySelector('.clear');
+
+
+
+clearButton.addEventListener('click',()=>{
+    deleteAllTasks()
+})
+
+let deleteAllTasks = ()=>{
+  for(let i in tasks){
+    console.log(taskIds[i].innerText);
+
+    let RESOURCE_URL = `/api/task/${taskIds[i].innerText}`;
+
+    fetch(RESOURCE_URL,
+          {
+            method:"DELETE"
+          })
+          .then(res=>res.json())
+          .then((data)=>{
+            tasks[i].style.display = "none";
+            setTimeout(() => {
+              // location.reload();
+              noTaskContainer.style.display="block";
+            }, 2000);
+
+            location.reload()
+          })
+      
+  }
+}
+
+
+refreshButton.addEventListener('click', () => {
+  location.reload();
+})
 
 let p = document.createElement("p");
 
@@ -63,6 +102,7 @@ taskForm.addEventListener("submit", (e) => {
     .then((data) => {
       console.log(data);
       let html = `
+                <span class="id">${data.task.id}</span>
                 <h3 class="task-name">
                     ${data.task.name}
                 </h3>
@@ -77,20 +117,18 @@ taskForm.addEventListener("submit", (e) => {
       newTask.classList.add("task");
 
       newTask.innerHTML = html;
-      loadingSpinner.style.display="block";
-      
-     
+      loadingSpinner.style.display = "block";
 
 
       setTimeout(() => {
         taskContainer.insertBefore(newTask, taskContainer.childNodes[0]);
-        loadingSpinner.style.display="none"
+        loadingSpinner.style.display = "none"
       }, 1200);
 
       setTimeout(() => {
         location.reload();
       }, 3000);
-      
+
     });
 
   taskForm.reset();
@@ -131,33 +169,33 @@ for (let i = 0; i < tasks.length; i++) {
       });
 
 
-      updateForm.addEventListener("submit", (e) => {
-        let RESOURCE_URL = `/api/task/${taskIds[i].innerText}`;
-    
-        let updatedData = new FormData(updateForm);
-    
-        let updatedTask = {
-          name: updatedData.get("name"),
-          description: updatedData.get("description"),
-        };
-        updateModal.style.display = "none";
-        fetch(RESOURCE_URL, {
-          method: "PUT",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(updatedTask),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            notificationModal.style.display = "block";
-            message.innerText = data.message;
-    
-            setTimeout(() => {
-              location.reload();
-            }, 3000);
-          });
-    
-        e.preventDefault();
-      });
+    updateForm.addEventListener("submit", (e) => {
+      let RESOURCE_URL = `/api/task/${taskIds[i].innerText}`;
+
+      let updatedData = new FormData(updateForm);
+
+      let updatedTask = {
+        name: updatedData.get("name"),
+        description: updatedData.get("description"),
+      };
+      updateModal.style.display = "none";
+      fetch(RESOURCE_URL, {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(updatedTask),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          taskNames[i].innerText = data.task.name;
+          taskDescriptions[i].innerText = data.task.description;
+          taskIds[i].innerText = data.task.id;
+          setTimeout(() => {
+            location.reload()
+          }, 3000);
+        });
+
+      e.preventDefault();
+    });
   });
 }
 
