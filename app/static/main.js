@@ -109,6 +109,7 @@ taskForm.addEventListener("submit", (e) => {
                 <p class="task-desc">
                    ${data.task.description}
                 </p>
+                <p>${data.task.date}</p>
                 <a href="#" class="delete-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
                 <a href="#" class="update-btn"><i class="fa fa-pen" aria-hidden="true"></i></a>
             `;
@@ -145,8 +146,7 @@ for (let i = 0; i < tasks.length; i++) {
     })
       .then((res) => res.json())
       .then((data) => {
-        notificationModal.style.display = "block";
-        message.innerText = data.message;
+
         tasks[i].style.display = "none";
         setTimeout(() => {
           location.reload();
