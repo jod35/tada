@@ -19,31 +19,31 @@ const clearButton = document.querySelector('.clear');
 
 
 
-clearButton.addEventListener('click',()=>{
-    deleteAllTasks()
+clearButton.addEventListener('click', () => {
+  deleteAllTasks()
 })
 
-let deleteAllTasks = ()=>{
-  for(let i in tasks){
+let deleteAllTasks = () => {
+  for (let i in tasks) {
     console.log(taskIds[i].innerText);
 
     let RESOURCE_URL = `/api/task/${taskIds[i].innerText}`;
 
     fetch(RESOURCE_URL,
-          {
-            method:"DELETE"
-          })
-          .then(res=>res.json())
-          .then((data)=>{
-            tasks[i].style.display = "none";
-            setTimeout(() => {
-              // location.reload();
-              noTaskContainer.style.display="block";
-            }, 2000);
+      {
+        method: "DELETE"
+      })
+      .then(res => res.json())
+      .then((data) => {
+        tasks[i].style.display = "none";
+        setTimeout(() => {
+          // location.reload();
+          noTaskContainer.style.display = "block";
+        }, 2000);
 
-            location.reload()
-          })
-      
+        countContainer.innerText = 0;
+      })
+
   }
 }
 

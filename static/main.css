@@ -65,6 +65,7 @@ label{
     text-align: center;
     height: 10vh;
     display: none;
+    padding: 25px;
 }
 .tasks{
     width: 75%;
