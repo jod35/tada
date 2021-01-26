@@ -19,31 +19,31 @@ const clearButton = document.querySelector('.clear');
 
 
 
-clearButton.addEventListener('click',()=>{
-    deleteAllTasks()
+clearButton.addEventListener('click', () => {
+  deleteAllTasks()
 })
 
-let deleteAllTasks = ()=>{
-  for(let i in tasks){
+let deleteAllTasks = () => {
+  for (let i in tasks) {
     console.log(taskIds[i].innerText);
 
     let RESOURCE_URL = `/api/task/${taskIds[i].innerText}`;
 
     fetch(RESOURCE_URL,
-          {
-            method:"DELETE"
-          })
-          .then(res=>res.json())
-          .then((data)=>{
-            tasks[i].style.display = "none";
-            setTimeout(() => {
-              // location.reload();
-              noTaskContainer.style.display="block";
-            }, 2000);
+      {
+        method: "DELETE"
+      })
+      .then(res => res.json())
+      .then((data) => {
+        tasks[i].style.display = "none";
+        setTimeout(() => {
+          // location.reload();
+          noTaskContainer.style.display = "block";
+        }, 2000);
 
-            location.reload()
-          })
-      
+        countContainer.innerText = 0;
+      })
+
   }
 }
 
@@ -109,6 +109,7 @@ taskForm.addEventListener("submit", (e) => {
                 <p class="task-desc">
                    ${data.task.description}
                 </p>
+                <p>${data.task.date}</p>
                 <a href="#" class="delete-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
                 <a href="#" class="update-btn"><i class="fa fa-pen" aria-hidden="true"></i></a>
             `;
@@ -145,8 +146,7 @@ for (let i = 0; i < tasks.length; i++) {
     })
       .then((res) => res.json())
       .then((data) => {
-        notificationModal.style.display = "block";
-        message.innerText = data.message;
+
         tasks[i].style.display = "none";
         setTimeout(() => {
           location.reload();
